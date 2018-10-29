@@ -1,0 +1,86 @@
+---
+- name: Install and Configure Fail2ban
+  hosts: aws
+  tasks:
+    - name: Install epel-release repository on CentOS7
+      when: ansible_distribution == "CentOS"
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install epel-release repository on Amazon-Linux
+      when: ansible_distribution == "Amazon"
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+
+    - name: Enable epel-release repository on Amazon-Linux
+      when: ansible_distribution == "Amazon"
+      command: "yum-config-manager --enable epel"
+
+
+    - name: Install Fail2ban
+      yum:
+        name: fail2ban
+        state: present
+
+
+    - name: Enable Fail2ban service
+      service:
+        name: fail2ban
+        enabled: yes
+
+
+    - name: Create configuration file (jail.local) file on Centos7
+      when: ansible_distribution == "CentOS"
+      file:
+        path: /etc/fail2ban/jail.local
+        state: touch
+
+
+    - name: Update Configuration file on Centos7
+      when: ansible_distribution == "CentOS"
+      blockinfile:
+        path: /etc/fail2ban/jail.local
+        block: |
+          [DEFAULT]
+          banaction = iptables-multiport
+          ignoreip =                                 # Enter IP/CIDR block to be ignored
+          bantime = 3600
+          findtime = 120
+          maxretry = 3
+          [sshd]
+          enabled  = true
+          
+          
+    - name: Update Configuration on Amazon-Linux
+      when: ansible_distribution == "Amazon"
+      blockinfile:
+        path: /etc/fail2ban/jail.conf
+        block: |
+          [DEFAULT]
+          ignoreip =                                  # Enter the IP/CIDR block to be ignored
+          bantime = 3600
+          findtime = 120
+          maxretry = 3
+          [ssh-iptables]
+          enabled  = true
+          filter   = sshd
+          action   = iptables[name=SSH, port=ssh, protocol=tcp]
+                     sendmail-whois[name=SSH, dest=root, sender=fail2ban@example.com]
+          logpath  = /var/log/secure
+          maxretry = 3
+          
+          
+    - name: Restart Fail2ban service on Amazon-Linux
+      when: ansible_distribution == "Amazon"
+      service:
+        name: fail2ban
+        state: restarted
+        
+
+    - name: Restart Fail2ban service on Centos7
+      when: ansible_distribution == "CentOS"
+      systemd:
+        name: fail2ban
+        state: restarted
