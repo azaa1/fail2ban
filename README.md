@@ -32,8 +32,6 @@ Restarts Fail2ban service on CentOS7
 ** Fail2ban Configuration"
 
 
-The configuration:
-
 Allows 3 retry
 
 Allows 2 minutes to login
