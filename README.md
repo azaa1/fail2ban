@@ -24,6 +24,9 @@ Restarts Fail2ban service on CentOS7
 The configuration:
 
 Allows 3 retry
+
 Allows 2 minutes to login
+
 If failed to login, bans for 1 hour
+
 Ignores company's CIDR block
