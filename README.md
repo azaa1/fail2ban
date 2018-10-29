@@ -28,6 +28,7 @@ Restarts Fail2ban service on Amazon-Linux
 Restarts Fail2ban service on CentOS7
 
 
+
 ** Fail2ban Configuration"
 
 
