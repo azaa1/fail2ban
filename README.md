@@ -1,3 +1,9 @@
+Fail2ban Service Installation on CentOS7 and Amazon-Linux
+
+This playbook will Install and Configure Fail2ban Service on CentOS7 and Amazon-Linux
+
+Please read README.md  for details and configuration of the service
+
 **** Fail2ban Service *****
 
 fail2ban.yaml file
