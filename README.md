@@ -1,6 +1,6 @@
 **** Fail2ban Service *****
 
-fail2ban.yaml
+fail2ban.yaml file
 
 For the configuration part of the playbook input your IP/CIDR block on lines 48 and 60
 
