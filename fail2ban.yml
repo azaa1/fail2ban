@@ -11,7 +11,7 @@
     - name: Install epel-release repository on Amazon-Linux
       when: ansible_distribution == "Amazon"
       yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
         state: present
 
     - name: Enable epel-release repository on Amazon-Linux
