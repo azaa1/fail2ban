@@ -1,6 +1,6 @@
 ---
 - name: Install and Configure Fail2ban
-  hosts: aws
+  hosts: all
   tasks:
     - name: Install epel-release repository on CentOS7
       when: ansible_distribution == "CentOS"
