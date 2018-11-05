@@ -25,20 +25,6 @@
         state: present
 
 
-    - name: Enable Fail2ban service on CentOS7
-      when: ansible_distribution == "CentOS"
-      systemd:
-        name: fail2ban
-        enabled: yes
-        
-        
-    - name: Enable Fail2ban service Amazon-Linux
-      when: ansible_distribution == "Amazon"
-      service:
-        name: fail2ban
-        enabled: yes
-
-
     - name: Create configuration file (jail.local) file on Centos7
       when: ansible_distribution == "CentOS"
       file:
@@ -85,10 +71,11 @@
       service:
         name: fail2ban
         state: restarted
-        
+        enabled: True
 
     - name: Restart Fail2ban service on Centos7
       when: ansible_distribution == "CentOS"
       systemd:
         name: fail2ban
         state: restarted
+        enabled: True
